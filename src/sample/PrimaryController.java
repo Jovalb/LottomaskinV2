@@ -92,6 +92,26 @@ public class PrimaryController {
         return stringBuilder.toString();
     }
 
+    static int fac (int a){
+        if (a == 1){
+            return a;
+        } else {
+            return a *= fac(a-1);
+        }
+    }
+
+
+    private static int regnUtBK(int n, int k){      // binomialkoeffisient n = lengden på array-1, k = antall tall som blir printet ut
+        if (n < k || k < 0){
+            throw new NumberFormatException("Parameterverdier er feil!");
+        }
+        int resultat = 0;
+
+        resultat = (fac(n))/(fac(k)*fac(n-k));
+
+        return resultat;
+    }
+
 
     @FXML
     private void test() {
@@ -101,7 +121,7 @@ public class PrimaryController {
         if (input.length < 8) {
             Alert error = new Alert(Alert.AlertType.ERROR, "Du har skrevet inn for få tall!");
             error.showAndWait();
-        } else if (input.length > 8) {
+        } else if (input.length > 12) {
             Alert error = new Alert(Alert.AlertType.ERROR, "Du har skrevet inn for mange tall!");
             error.showAndWait();
         } else {
@@ -135,10 +155,13 @@ public class PrimaryController {
                 //maks 8 rekker for 8 tall
                 for (int i = 0; i < listeArray.length - 1; i++) {
                     rotasjon(listeArray, 1);
+                    int [] tempRotertListe = Arrays.copyOfRange(listeArray, 0, 7);
+                    Arrays.sort(tempRotertListe);
                     System.out.println(arrayToString(listeArray));
-                    observableList.add(arrayToString(listeArray));
+                    System.out.println(Arrays.toString(tempRotertListe));
+                    observableList.add(Arrays.toString(tempRotertListe));
                 }
-                SortedList<ObservableList> sortedList = new SortedList(observableList);
+                //SortedList<ObservableList> sortedList = new SortedList(observableList);
                 listeView.setItems(observableList);
             }
 
