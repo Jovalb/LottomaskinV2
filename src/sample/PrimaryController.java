@@ -128,8 +128,20 @@ public class PrimaryController {
     private void createList() {
         String[] input = inputBox.getText().split("-");
         Boolean inneholderUgyldigTall = false;
+        try {
+            for (String s : input){
+                Integer.parseInt(s);
+            }
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+            inneholderUgyldigTall = true;
+        }
 
-        if (input.length < 8) {
+
+        if (inneholderUgyldigTall){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Du har skrevet noe annet enn tall, dobbeltsjekk!");
+            error.showAndWait();
+        } else if (input.length < 8) {
             Alert error = new Alert(Alert.AlertType.ERROR, "Du har skrevet inn for få tall!");
             error.showAndWait();
         } else if (input.length > 12) {

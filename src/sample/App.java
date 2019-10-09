@@ -22,6 +22,7 @@ public class App extends Application {
 
         Scene scene = new Scene(root, 800, 600);
         stage.setScene(scene);
+        stage.setTitle("Lottomaskin");
         stage.show();
     }
 
