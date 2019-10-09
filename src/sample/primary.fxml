@@ -5,20 +5,38 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PrimaryController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="20.0" stylesheets="@StyleSheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PrimaryController">
     <children>
-        <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefWidth="201.0" text="Lottotall Generator">
+        <Label alignment="TOP_LEFT" contentDisplay="CENTER" text="Lottotall Generator">
             <font>
-                <Font size="24.0" />
+                <Font name="System Bold" size="24.0" />
             </font></Label>
-        <Label text="Skriv 8-12 tall fra 1-34 i boksen under&#10;( pass på at du skriver &quot;-&quot; i mellom hvert tall! )" textAlignment="CENTER" />
-        <TextField fx:id="inputBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="152.0" />
-        <Button fx:id="primaryButton" onAction="#createList" text="Generer Liste" />
-      <Button fx:id="emptyListButton" onAction="#emptyList" text="Tøm Liste" />
-        <ListView fx:id="listeView" prefHeight="200.0" prefWidth="200.0" />
+        <Label text="Skriv 8-12 tall fra 1-34 i boksen under&#10;( pass på at du skriver &quot;-&quot; i mellom hvert tall! )" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
+        <TextField fx:id="inputBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" />
+        <Button fx:id="primaryButton" onAction="#createList" prefHeight="25.0" prefWidth="86.0" text="Generer Liste" />
+      <Button fx:id="emptyListButton" onAction="#emptyList" prefHeight="25.0" prefWidth="86.0" text="Tøm Liste" />
+        <ListView id="listeViewCSS" fx:id="listeView" />
+      <Label fx:id="antallRekkerLabel" alignment="BASELINE_CENTER" text="Antall rekker produsert: 0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <HBox alignment="BASELINE_RIGHT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label text="© Jovo">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
