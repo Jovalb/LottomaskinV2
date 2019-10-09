@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldListCell;
 import sun.security.util.ArrayUtil;
 
 import javax.swing.*;
@@ -101,7 +102,7 @@ public class PrimaryController {
     }
 
 
-    private static int regnUtBK(int n, int k){      // binomialkoeffisient n = lengden på array-1, k = antall tall som blir printet ut
+    private static int regnUtBK(int n, int k){      // binomialkoeffisient n = lengden på array, k = antall tall som blir printet ut
         if (n < k || k < 0){
             throw new NumberFormatException("Parameterverdier er feil!");
         }
@@ -112,9 +113,14 @@ public class PrimaryController {
         return resultat;
     }
 
+    @FXML
+    private void emptyList(){
+        observableList.clear();
+    }
+
 
     @FXML
-    private void test() {
+    private void createList() {
         String[] input = inputBox.getText().split("-");
         Boolean inneholderUgyldigTall = false;
 
@@ -151,18 +157,18 @@ public class PrimaryController {
                 Alert error = new Alert(Alert.AlertType.ERROR, "Noen av tallene dine er feil eller duplikat, dobbeltsjekk! ");
                 error.showAndWait();
             } else {
-                observableList.add(arrayToString(listeArray));
                 //maks 8 rekker for 8 tall
-                for (int i = 0; i < listeArray.length - 1; i++) {
+                for (int i = 0; i < regnUtBK(listeArray.length,7); i++) {
                     rotasjon(listeArray, 1);
                     int [] tempRotertListe = Arrays.copyOfRange(listeArray, 0, 7);
                     Arrays.sort(tempRotertListe);
-                    System.out.println(arrayToString(listeArray));
                     System.out.println(Arrays.toString(tempRotertListe));
                     observableList.add(Arrays.toString(tempRotertListe));
                 }
-                //SortedList<ObservableList> sortedList = new SortedList(observableList);
+                FXCollections.sort(observableList);
                 listeView.setItems(observableList);
+                listeView.setEditable(true);
+                listeView.setCellFactory(TextFieldListCell.forListView());
             }
 
         }
