@@ -14,7 +14,7 @@
             <font>
                 <Font size="24.0" />
             </font></Label>
-        <Label text="Skriv 8 tall fra 1-34 i boksen under&#10;( pass på at du skriver &quot;-&quot; i mellom hvert tall! )" textAlignment="CENTER" />
+        <Label text="Skriv 8-12 tall fra 1-34 i boksen under&#10;( pass på at du skriver &quot;-&quot; i mellom hvert tall! )" textAlignment="CENTER" />
         <TextField fx:id="inputBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="152.0" />
         <Button fx:id="primaryButton" onAction="#createList" text="Generer Liste" />
       <Button fx:id="emptyListButton" onAction="#emptyList" text="Tøm Liste" />
