@@ -116,11 +116,80 @@ public class PrimaryController {
 
     private static int teller = 0;
 
+    public static ArrayList<int[]> enumKCombos(int[] array, int k) {
+
+        // Create an empty ArrayList to store all the k-combinations.
+        // The k-combinations are stored as int arrays.
+        ArrayList<int[]> comboList = new ArrayList<int[]>();
+
+        // The process of enumerating the k-combinations can be done with a
+        // recursive function where each recursion is passed a shorter array and
+        // a smaller value of k. The base case of k = 1, and any larger values
+        // call the recursive function with a decremented value of k.
+
+        assert (k > 0);
+
+        if (k > 1) {
+
+            assert (array.length >= k);
+
+            // Store the first member of the array.
+            int[] first = new int[1];
+            first[0] = array[0];
+            array = Arrays.copyOfRange(array, 1, array.length);
+
+            while (array.length + 1 >= k) {
+                ArrayList<int[]> subComboList = new ArrayList<int[]>();
+                // Call the recursive function and temporarily store the
+                //   returned arrays.
+                subComboList = enumKCombos(array, k - 1);
+
+                // Concatenate the stored first member onto the front of the
+                //   returned arrays.
+                int[] subArray;
+                for (int i = 0; i < subComboList.size(); i++) {
+                    subArray = subComboList.get(i);
+                    int[] concatenated = new int[subArray.length + 1];
+                    concatenated[0] = first[0];
+                    for (int j = 0; j < subArray.length; j++) {
+                        concatenated[j + 1] = subArray[j];
+                    }
+                    comboList.add(concatenated);
+                }
+
+                // Add the newly-concatenated arrays to the comboList.
+                // Replace first with array[0].
+                first[0] = array[0];
+
+                // Splice array to remove the first member.
+                array = Arrays.copyOfRange(array, 1, array.length);
+            }
+        } else {
+            // Return the individual members of array as individual 1-member
+            //   arrays.
+            for (int i = 0; i < array.length; i++) {
+                comboList.add(Arrays.copyOfRange(array, i, i + 1));
+            }
+        }
+
+        return comboList;
+    }
+
+
+    public static void main(String[] args) {
+        int[] a = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        for (int[] i : enumKCombos(a, 7)) {
+            System.out.println(Arrays.toString(i));
+            teller++;
+        }
+        System.out.println(teller);
+    }
+
     @FXML
     private void emptyList() {
         observableList.clear();
         teller = 0;
-        antallRekkerLabel.setText("Antall rekker produsert: "+teller);
+        antallRekkerLabel.setText("Antall rekker produsert: " + teller);
     }
 
 
@@ -129,16 +198,16 @@ public class PrimaryController {
         String[] input = inputBox.getText().split("-");
         Boolean inneholderUgyldigTall = false;
         try {
-            for (String s : input){
+            for (String s : input) {
                 Integer.parseInt(s);
             }
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
             inneholderUgyldigTall = true;
         }
 
 
-        if (inneholderUgyldigTall){
+        if (inneholderUgyldigTall) {
             Alert error = new Alert(Alert.AlertType.ERROR, "Du har skrevet noe annet enn tall, dobbeltsjekk!");
             error.showAndWait();
         } else if (input.length < 8) {
@@ -168,21 +237,17 @@ public class PrimaryController {
                 }
             }
 
+
             if (inneholderUgyldigTall) {
                 Alert error = new Alert(Alert.AlertType.ERROR, "Noen av tallene dine er feil eller duplikat, dobbeltsjekk! ");
                 error.showAndWait();
             } else {
-                //maks 8 rekker for 8 tall
-                for (int i = 0; i < regnUtBK(listeArray.length, 7); i++) {
-                    rotasjon(listeArray, 1);
-                    int[] tempRotertListe = Arrays.copyOfRange(listeArray, 0, 7);
-                    Arrays.sort(tempRotertListe);
-                    System.out.println(Arrays.toString(tempRotertListe));
-                    observableList.add(Arrays.toString(tempRotertListe));
+                for (int[] a : enumKCombos(listeArray, 7)) {
+                    observableList.add(Arrays.toString(a));
                     teller++;
                 }
-                System.out.println("Antall rekker produsert: "+teller);
-                antallRekkerLabel.setText("Antall rekker produsert: "+teller);
+                System.out.println("Antall rekker produsert: " + teller);
+                antallRekkerLabel.setText("Antall rekker produsert: " + teller);
                 FXCollections.sort(observableList);
                 listeView.setItems(observableList);
                 listeView.setEditable(true);
